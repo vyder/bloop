@@ -1,4 +1,4 @@
-# Blueprint CLI
+# bloop
 
 ## Install
 
