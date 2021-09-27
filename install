@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+require 'fileutils'
+
+BIN_NAME = 'bloop'
+
+BIN_DIR      = File.expand_path('bin', '~')
+BIN_FILENAME = File.expand_path(BIN_NAME, BIN_DIR)
+COMMAND_FILE = File.expand_path('../command.rb', __FILE__)
+
+if ARGV[0] === '--remove'
+    if File.exists? BIN_FILENAME
+        FileUtils.rm BIN_FILENAME
+        puts "Removed '#{BIN_NAME}' at #{BIN_FILENAME}"
+    else
+        puts "Could not find an installation at: #{BIN_FILENAME}"
+    end
+    exit 0
+end
+
+binFile = <<EOF
+#!/bin/bash
+#{COMMAND_FILE} $@
+EOF
+
+File.open(BIN_FILENAME, "w+") { |f| f.write(binFile) }
+FileUtils.chmod '+x', BIN_FILENAME
+
+puts "Done. '#{BIN_NAME}' installed at #{BIN_FILENAME}."

@@ -1,0 +1,7 @@
+templates:
+types:
+  node:
+    ignore:
+      - node_modules
+      - build
+      - .git
